@@ -1,8 +1,16 @@
 const fs = require("fs");
 const Discord = require("discord.js");
 const client = new Discord.Client();
+
+if (!fs.existsSync("./config.json")) {
+  console.log("config.json not found");
+  process.exit();
+}
+
 client.config = require("./config.json");
 client.function = require("./include/functions");
+if (!fs.existsSync("./database")) fs.mkdirSync("./database");
+client.db = require("better-sqlite3")("./database/db.sqlite");
 
 client.function.configcheck(client);
 
