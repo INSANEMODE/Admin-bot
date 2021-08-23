@@ -1,12 +1,14 @@
-const { MessageEmbed } = require('discord.js');
-exports.run = (client, message) => {
-    const embed = new MessageEmbed()
-        .setTitle('🏓 Pong : ' + Math.floor(client.ws.ping) + 'ms')
-        .setColor(client.color)
-    message.channel.send({ embeds: [embed] });
-};
+const { SlashCommandBuilder } = require('@discordjs/builders');
+const { MessageAttachment, MessageEmbed } = require('discord.js');
 
-exports.conf = {
-    aliases: [],
-    permissions: ['SEND_MESSAGES', 'EMBED_LINKS']
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('ping')
+		.setDescription('Replies with Pong!'),
+	async execute(interaction) {
+        const embed = new MessageEmbed()
+            .setTitle('🏓 Pong : ' + Math.floor(interaction.client.ws.ping) + 'ms')
+            .setColor(interaction.client.color)
+        interaction.reply({ embeds: [embed] });
+	},
 };

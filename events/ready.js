@@ -2,7 +2,11 @@ const fetch = require('node-fetch');
 const dbutils = require('../include/dbutils');
 const { MessageEmbed } = require('discord.js');
 
-module.exports = async (client) => {
+module.exports = {
+    name: 'ready',
+	once: true,
+    
+    async execute(client) {
     async function presence() {
         let infos = await client.function.fetchinfo(client.config.admin_id);
         if (infos) {
@@ -83,4 +87,5 @@ module.exports = async (client) => {
     }
 
     console.log('\nBot is online with id ' + client.user.id);
+    },
 };

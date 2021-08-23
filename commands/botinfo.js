@@ -1,6 +1,12 @@
 const os = require('os');
-const { MessageEmbed } = require('discord.js');
-exports.run = async (client, message) => {
+const { MessageAttachment, MessageEmbed } = require('discord.js');
+const { SlashCommandBuilder } = require('@discordjs/builders');
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('botinfo')
+		.setDescription('Gets info for the bot.'),
+    
+    async execute(interaction){
     let delay = ms => new Promise(res => setTimeout(res, ms));
 
     function cpuaverage() {
@@ -24,8 +30,8 @@ exports.run = async (client, message) => {
 
         let emb = new MessageEmbed()
             .setTitle("Bot Info")
-            .setColor(client.color)
-            .setThumbnail(client.thumbnail)
+            .setColor(interaction.client.color)
+            .setThumbnail(interaction.client.thumbnail)
             .addField("Bot's memory usage [" + ((process.memoryUsage().heapUsed / os.totalmem()) * 100).toFixed(2) + "%]", (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2) + " MB / " + (((os.totalmem() / 1024) / 1024) / 1024).toFixed(2) + " GB", true)
             .addField("Cpu usage [" + percentagecpu + "%]", (process.cpuUsage().user / 1024 / 1024).toFixed(2) + " MB | " + os.cpus().length + (os.cpus().length === 1 ? " Core" : " Cores"), true)
             .addField("\u200b", "\u200b", true)
@@ -35,18 +41,17 @@ exports.run = async (client, message) => {
             .addField("Platform", process.platform.replace(/win32/g, "Windows"), true)
             .addField("Architecture", os.arch(), true)
             .addField("\u200b", "\u200b", true)
-            .addField("Bot's Uptime", client.function.timeformat(client.uptime / 1000), false)
-            .setFooter(client.footer)
-        message.channel.send({ embeds: [emb] });
+            .addField("Bot's Uptime", interaction.client.function.timeformat(interaction.client.uptime / 1000), false)
+            .setFooter(interaction.client.footer)
+        interaction.reply({ embeds: [emb] });
+        
     }
 
-    if (client.config.ownerid)
-        if (message.author.id === client.config.ownerid) msg();
-        else message.channel.send('```css\nThis command is locked for owner```');
+    if (interaction.client.config.ownerid)
+        if (interaction.member.id === interaction.client.config.ownerid) msg();
+        else interaction.reply('```css\nThis command is locked for owner```');
     else msg();
+    },
 };
 
-exports.conf = {
-    aliases: ['binfo'],
-    permissions: ['SEND_MESSAGES', 'EMBED_LINKS']
-};
+
