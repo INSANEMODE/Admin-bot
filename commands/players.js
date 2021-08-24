@@ -3,8 +3,8 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('stats')
-		.setDescription('gets stats for a client')
+		.setName('players')
+		.setDescription('gets list of players for a server')
         
         .addStringOption(option =>
             option.setName('serverid')
