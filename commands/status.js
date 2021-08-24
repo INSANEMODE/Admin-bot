@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageAttachment, MessageEmbed } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('status')
@@ -14,7 +14,7 @@ module.exports = {
     var page = interaction.options.getInteger('page');
     //if (args[0] && isNaN(args[0])) return interaction.reply('```css\nFormat:\nstatus <page number>```');
     let infos = await interaction.client.function.fetchinfo(interaction.client.config.admin_id);
-    if (!infos) return interaction.reply('```css\nInstance with the provided admin id is not found```');
+    if (!infos) return interaction.reply({ephemeral: true, content:'```css\nInstance with the provided admin id is not found```'});
 
     let offset;
     let sername = infos[0];

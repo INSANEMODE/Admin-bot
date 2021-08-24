@@ -1,5 +1,5 @@
 const os = require('os');
-const { MessageAttachment, MessageEmbed } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 module.exports = {
 	data: new SlashCommandBuilder()
