@@ -6,13 +6,13 @@ module.exports = {
 		.setName('stats')
 		.setDescription('gets stats for a client')
         
-        .addIntegerOption(option =>
+        .addStringOption(option =>
             option.setName('clientid')
                 .setDescription('<Client Id> use /find <name> to get')
-                .setRequired(false)),
+                .setRequired(true)),
 
     async execute(interaction) {
-    var clientid = interaction.options.getInteger('clientid');
+    var clientid = interaction.options.getString('clientid');
     const response = await fetch(interaction.client.config.webfronturl + '/api/stats/' + clientid)
         .then((res) => res.json())
         .catch(() => { console.log('\x1b[31mWarning: ' + interaction.client.config.webfronturl + ' not reachable\x1b[0m') });
