@@ -24,7 +24,6 @@ module.exports = {
         if (page <= 0) return interaction.reply('Incorrect Usage. Example:```css\n' + client.config.prefix + 'players <serverid | ip:port | serial no. from status cmd> <page no.>```');
     }
 
-    const id = id;
 
     if (id.length > 10 && id.length < 20) {
         var serverid = id.replace(/[^0-9]/g, '');
