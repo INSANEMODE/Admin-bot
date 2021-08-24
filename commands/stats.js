@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageAttachment, MessageEmbed } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('stats')

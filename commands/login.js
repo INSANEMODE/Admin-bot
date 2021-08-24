@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 const dbutils = require('../include/dbutils');
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageAttachment, MessageEmbed } = require('discord.js');
+
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('login')

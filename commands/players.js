@@ -19,16 +19,16 @@ module.exports = {
     const id = interaction.options.getString('serverid');
     var page = interaction.options.getInteger('page');
 
-    if (id.match(/[a-z]/i) || id <= 0) return interaction.reply('Incorrect Usage. Example:```css\n' + client.config.prefix + 'players <serverid | ip:port | serial no. from status cmd> <page no.>```');
+    if (id.match(/[a-z]/i) || id <= 0) return interaction.reply('Incorrect Usage. Example:```css\n' + interaction.client.config.prefix + 'players <serverid | ip:port | serial no. from status cmd> <page no.>```');
     if (page) {
-        if (page <= 0) return interaction.reply('Incorrect Usage. Example:```css\n' + client.config.prefix + 'players <serverid | ip:port | serial no. from status cmd> <page no.>```');
+        if (page <= 0) return interaction.reply('Incorrect Usage. Example:```css\n' + interaction.client.config.prefix + 'players <serverid | ip:port | serial no. from status cmd> <page no.>```');
     }
 
 
     if (id.length > 10 && id.length < 20) {
         var serverid = id.replace(/[^0-9]/g, '');
     } else {
-        let infos = await client.function.fetchinfo(client.config.admin_id);
+        let infos = await interaction.client.function.fetchinfo(interaction.client.config.admin_id);
         if (infos[5].length >= id) {
             var serverid = infos[5][id - 1].replace(/[^0-9]/g, '');
         } else {
@@ -36,13 +36,13 @@ module.exports = {
         }
     }
 
-    let data = await client.function.fetchplayers(client.config.webfronturl, serverid);
+    let data = await interaction.client.function.fetchplayers(interaction.client.config.webfronturl, serverid);
     if (data === 400) return interaction.reply("Server with provided id not found");
-    if (data === 404) return interaction.reply("Cannot establish connection to <" + client.config.webfronturl + ">");
+    if (data === 404) return interaction.reply("Cannot establish connection to <" + interaction.client.config.webfronturl + ">");
 
     if (!data[0]) {
         const empty = new MessageEmbed()
-            .setColor(client.color)
+            .setColor(interaction.client.color)
             .setDescription("```" + data[1][1] + " is empty```")
             .setFooter("ID: " + data[1][0])
         return interaction.reply({ embeds: [empty] });
@@ -50,7 +50,7 @@ module.exports = {
 
     let offset;
     let players = [];
-    let max = client.config.results_perpage;
+    let max = interaction.client.config.results_perpage;
     let less = max - 1;
 
     pgno = Math.ceil(page);
@@ -68,7 +68,7 @@ module.exports = {
 
     const plst = new MessageEmbed()
         .setTitle(data[1][1])
-        .setColor(client.color)
+        .setColor(interaction.client.color)
         .setDescription(`\`\`\`${td}\`\`\``)
         .setFooter(`Page: ${Math.ceil(offset / max)}/${maxpages}`)
     interaction.reply({ embeds: [plst] });
